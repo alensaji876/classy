@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ganamela - Hand Tracking Orchestra</title>
+    <link rel="stylesheet" href="style.css?v=10">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MediaPipe dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Video Quality HUD Control -->
+        <div class="quality-panel">
+            <div class="quality-pill" id="qualityPill" title="Video Quality Settings">
+                <span class="quality-dot"></span>
+                <span id="qualityText">1080p FHD</span>
+                <span class="gear-icon">⚙️</span>
+            </div>
+            <div class="quality-dropdown" id="qualityDropdown">
+                <div class="dropdown-header">Camera Source</div>
+                <select class="camera-select" id="cameraSelect">
+                    <option value="">Default Camera</option>
+                </select>
+
+                <div class="dropdown-header" style="margin-top: 8px;">Video Resolution</div>
+                <button class="quality-btn" data-res="4k">4K Ultra HD (3840×2160)</button>
+                <button class="quality-btn active" data-res="1080p">1080p Full HD (1920×1080)</button>
+                <button class="quality-btn" data-res="720p">720p HD (1280×720)</button>
+                
+                <div class="dropdown-header" style="margin-top: 8px;">Clarity Enhancer</div>
+                <div class="clarity-toggle-row">
+                    <span>Crisp Contrast</span>
+                    <button class="toggle-btn active" id="clarityToggle">ON</button>
+                </div>
+            </div>
+        </div>
+
+        <header class="glass-header">
+            <h1>Ganamela 🎶</h1>
+            <p>Gesture-controlled acoustic orchestra with glowing harmonic beams</p>
+        </header>
+
+        <main class="canvas-wrapper">
+            <div class="loading-indicator" id="loading">
+                <div class="spinner"></div>
+                <p>Initializing Camera & AI Models...</p>
+            </div>
+            
+            <video id="input_video" class="input_video" autoplay playsinline></video>
+            <canvas id="output_canvas" class="output_canvas"></canvas>
+            
+            <div class="status-badge" id="statusBadge">Waiting for hands...</div>
+        </main>
+        
+        <!-- Compact Sleek Legend HUD -->
+        <div class="legend-panel">
+            <div class="legend-header">
+                <h3>Instruments</h3>
+                <span class="sound-tag" id="soundStatus">Click to Enable</span>
+            </div>
+            <ul class="legend-list">
+                <li style="--c: #ff003c;">
+                    <span class="dot"></span>
+                    <span class="finger-name">Thumb</span>
+                    <span class="inst-name">🎻 Cello</span>
+                </li>
+                <li style="--c: #00f0ff;">
+                    <span class="dot"></span>
+                    <span class="finger-name">Index</span>
+                    <span class="inst-name">🪈 Flute</span>
+                </li>
+                <li style="--c: #39ff14;">
+                    <span class="dot"></span>
+                    <span class="finger-name">Middle</span>
+                    <span class="inst-name">🎻 Violin</span>
+                </li>
+                <li style="--c: #fcf803;">
+                    <span class="dot"></span>
+                    <span class="finger-name">Ring</span>
+                    <span class="inst-name">🪕 Harp</span>
+                </li>
+                <li style="--c: #a55eea;">
+                    <span class="dot"></span>
+                    <span class="finger-name">Pinky</span>
+                    <span class="inst-name">🔔 Bells</span>
+                </li>
+            </ul>
+
+            <!-- Compact Intensity Meter -->
+            <div class="intensity-container">
+                <div class="intensity-label">
+                    <span>Intensity</span>
+                    <span id="intensityPercent">0%</span>
+                </div>
+                <div class="intensity-bar-bg">
+                    <div class="intensity-bar-fill" id="intensityBar"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="glow-effect top-left"></div>
+        <div class="glow-effect bottom-right"></div>
+    </div>
+
+    <script src="script.js?v=10"></script>
+</body>
+</html>
